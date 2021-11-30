@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+    "watch": "nodemon",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "fs-extra": "^10.0.0",
     "next": "12.0.1",
     "query-string": "^7.0.1",
     "react": "17.0.2",
@@ -18,10 +20,14 @@
     "swr": "^1.0.1"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "@types/react": "^17.0.37",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.0",
-    "prettier-plugin-organize-imports": "^2.3.4"
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
   }
 }
