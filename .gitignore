@@ -35,4 +35,5 @@ yarn-error.log*
 .vscode
 
 # generated
-src/types/pages
+src/types/pages*
+

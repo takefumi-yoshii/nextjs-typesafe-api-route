@@ -1,5 +1,4 @@
-import type { Error } from "@/types/api";
-import type { GetReqQuery, GetResBody } from "@/types/pages/api";
+import type { Error, GetReqQuery, GetResBody } from "@/types/pages/api";
 import queryString from "query-string";
 import useSWR, { SWRConfiguration } from "swr";
 // _____________________________________________________________________________

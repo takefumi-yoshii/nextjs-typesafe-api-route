@@ -1,4 +1,4 @@
-import type { ApiHandler } from "@/types/api";
+import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
 export type GetHandler = ApiHandler<{ message: string }, { name: string }, {}>;

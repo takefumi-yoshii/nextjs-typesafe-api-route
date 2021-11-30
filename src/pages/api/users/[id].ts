@@ -1,12 +1,5 @@
-import type { ApiHandler } from "@/types/api";
-import type { User } from "@/types/models";
-// _____________________________________________________________________________
-//
-const users: User[] = [
-  { id: "123", name: "taro" },
-  { id: "456", name: "jiro" },
-  { id: "789", name: "hanako" },
-];
+import { User, users } from "@/models/users";
+import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
 export type GetHandler = ApiHandler<{ user: User }, { id: string }, {}>;
@@ -48,7 +41,7 @@ const deleteHandler: DeleteHandler = (req, res) => {
       .json({ error: { httpStatus: 400, message: "Invalid Request" } });
     return;
   }
-  res.status(200).json({ data: { a: "a" } });
+  res.status(200).json({ data: {} });
 };
 // _____________________________________________________________________________
 //

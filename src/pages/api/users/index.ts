@@ -1,12 +1,5 @@
-import type { ApiHandler } from "@/types/api";
-import type { User } from "@/types/models";
-// _____________________________________________________________________________
-//
-const users: User[] = [
-  { id: "123", name: "taro" },
-  { id: "456", name: "jiro" },
-  { id: "789", name: "hanako" },
-];
+import { User, users } from "@/models/users";
+import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
 export type GetHandler = ApiHandler<{ users: User[] }, { page?: string }, {}>;
