@@ -55,7 +55,7 @@ export const createModuleShim = ({
         ),
       ])
     ),
-    factory.createStringLiteral("@/types/api"),
+    factory.createStringLiteral(moduleNameSpaece),
     undefined
   ),
   factory.createModuleDeclaration(
