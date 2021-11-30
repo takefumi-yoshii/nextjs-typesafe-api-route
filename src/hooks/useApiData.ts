@@ -1,21 +1,32 @@
 import type { Error } from "@/types/api";
 import type { GetReqQuery, GetResBody } from "@/types/pages/api";
 import queryString from "query-string";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 // _____________________________________________________________________________
 //
 export function useApiData<
   T extends keyof GetResBody,
-  Q extends GetReqQuery[T],
-  U extends GetResBody[T]
->(key: T, query?: Q, init?: RequestInit) {
-  const qs = queryString.stringify(query as {});
+  ReqQuery extends GetReqQuery[T],
+  ResBody extends GetResBody[T]
+>(
+  key: T,
+  options: {
+    query?: ReqQuery;
+    requestInit?: RequestInit;
+    swrConfig?: SWRConfiguration;
+  } = {}
+) {
+  const qs = queryString.stringify(options.query as {});
   const url = qs ? `${key}?${qs}` : key;
-  return useSWR<U, Error["error"]>(url, async (): Promise<U> => {
-    return await fetch(url, init).then(async (res) => {
-      const { data, error } = await res.json();
-      if (error) throw error;
-      return data;
-    });
-  });
+  return useSWR<ResBody, Error["error"]>(
+    url,
+    async (): Promise<ResBody> => {
+      return await fetch(url, options.requestInit).then(async (res) => {
+        const { data, error } = await res.json();
+        if (error) throw error;
+        return data;
+      });
+    },
+    options.swrConfig
+  );
 }
