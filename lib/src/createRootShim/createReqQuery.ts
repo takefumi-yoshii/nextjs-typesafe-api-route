@@ -3,7 +3,7 @@ import { factory } from "typescript";
 // ______________________________________________________
 //
 // OUTPUT:
-// type ReqQuery<T> = T extends ApiHandler<unknown, infer I, any> ? I : never;
+// type ReqQuery<T> = T extends ApiHandler<infer I, any, unknown> ? I : never;
 //
 export const createReqQuery = () =>
   factory.createTypeAliasDeclaration(
@@ -20,7 +20,6 @@ export const createReqQuery = () =>
     factory.createConditionalTypeNode(
       factory.createTypeReferenceNode(factory.createIdentifier("T"), undefined),
       factory.createTypeReferenceNode(factory.createIdentifier("ApiHandler"), [
-        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
         factory.createInferTypeNode(
           factory.createTypeParameterDeclaration(
             factory.createIdentifier("I"),
@@ -29,6 +28,7 @@ export const createReqQuery = () =>
           )
         ),
         factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
       ]),
       factory.createTypeReferenceNode(factory.createIdentifier("I"), undefined),
       factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword)

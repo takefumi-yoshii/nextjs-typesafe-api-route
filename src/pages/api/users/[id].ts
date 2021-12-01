@@ -2,7 +2,7 @@ import { User, users } from "@/models/users";
 import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
-export type GetHandler = ApiHandler<{ user: User }, { id: string }, {}>;
+export type GetHandler = ApiHandler<{ id: string }, {}, { user: User }>;
 const getHandler: GetHandler = (req, res) => {
   if (!req.query.id) {
     res
@@ -22,9 +22,9 @@ const getHandler: GetHandler = (req, res) => {
 // _____________________________________________________________________________
 //
 export type PutHandler = ApiHandler<
-  { id: string; name: string },
   { id: string },
-  { name: string }
+  { name: string },
+  { id: string; name: string }
 >;
 const putHandler: PutHandler = (req, res) => {
   if (!req.query.id || !req.body?.name) {
@@ -37,7 +37,7 @@ const putHandler: PutHandler = (req, res) => {
 };
 // _____________________________________________________________________________
 //
-export type DeleteHandler = ApiHandler<{ id: string }, { id: string }, {}>;
+export type DeleteHandler = ApiHandler<{ id: string }, {}, { id: string }>;
 const deleteHandler: DeleteHandler = (req, res) => {
   if (!req.query.id) {
     res

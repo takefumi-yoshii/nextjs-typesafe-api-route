@@ -2,16 +2,16 @@ import { User, users } from "@/models/users";
 import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
-export type GetHandler = ApiHandler<{ users: User[] }, { page?: string }, {}>;
+export type GetHandler = ApiHandler<{ page?: string }, {}, { users: User[] }>;
 const getHandler: GetHandler = (_req, res) => {
   res.status(200).json({ data: { users } });
 };
 // _____________________________________________________________________________
 //
 export type PostHandler = ApiHandler<
-  { id: string; name: string },
   {},
-  { name: string }
+  { name: string },
+  { id: string; name: string }
 >;
 const postHandler: PostHandler = (req, res) => {
   if (!req.body?.name) {

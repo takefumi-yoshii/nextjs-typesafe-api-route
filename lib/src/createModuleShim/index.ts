@@ -21,9 +21,9 @@ export const createModuleShim = ({
     [factory.createModifier(ts.SyntaxKind.DeclareKeyword)],
     factory.createStringLiteral(moduleNameSpaece),
     factory.createModuleBlock([
-      ...methods.map((method) => createShim(method, apiPath, "ResBody")),
       ...methods.map((method) => createShim(method, apiPath, "ReqQuery")),
       ...methods.map((method) => createShim(method, apiPath, "ReqBody")),
+      ...methods.map((method) => createShim(method, apiPath, "ResBody")),
     ])
   ),
 ];

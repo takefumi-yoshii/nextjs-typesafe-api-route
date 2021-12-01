@@ -1,7 +1,7 @@
 import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
-export type GetHandler = ApiHandler<{ message: string }, { name: string }, {}>;
+export type GetHandler = ApiHandler<{ name: string }, {}, { message: string }>;
 const getHandler: GetHandler = (req, res) => {
   if (!req.query.name) {
     res

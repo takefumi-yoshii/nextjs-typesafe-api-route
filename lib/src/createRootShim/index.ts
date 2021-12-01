@@ -16,9 +16,9 @@ export const createRootShim = (moduleNameSpaece: string) => [
     factory.createStringLiteral(moduleNameSpaece),
     factory.createModuleBlock([
       createApiHandler(),
-      createResBody(),
       createReqQuery(),
       createReqBody(),
+      createResBody(),
       ...createInterfacePlaceholders(),
     ])
   ),

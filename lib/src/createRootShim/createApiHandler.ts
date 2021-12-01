@@ -3,12 +3,12 @@ import { factory } from "typescript";
 // ______________________________________________________
 //
 // OUTPUT:
-// export type ApiHandler<T = unknown, Q = unknown, B = any> = (
+// export type ApiHandler<Q = unknown, B = any, R = unknown> = (
 //   req: Omit<NextApiRequest, "body" | "query"> & {
 //       query: Partial<Q>;
 //       body?: B;
 //   },
-//   res: NextApiResponse<Data<T> | Error>
+//   res: NextApiResponse<Data<R> | Error>
 //   ) => void | Promise<void>;
 //
 export const createApiHandler = () =>
@@ -18,11 +18,6 @@ export const createApiHandler = () =>
     factory.createIdentifier("ApiHandler"),
     [
       factory.createTypeParameterDeclaration(
-        factory.createIdentifier("T"),
-        undefined,
-        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
-      ),
-      factory.createTypeParameterDeclaration(
         factory.createIdentifier("Q"),
         undefined,
         factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
@@ -31,6 +26,11 @@ export const createApiHandler = () =>
         factory.createIdentifier("B"),
         undefined,
         factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+      ),
+      factory.createTypeParameterDeclaration(
+        factory.createIdentifier("R"),
+        undefined,
+        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
       ),
     ],
     factory.createFunctionTypeNode(
@@ -99,7 +99,7 @@ export const createApiHandler = () =>
                   factory.createIdentifier("Data"),
                   [
                     factory.createTypeReferenceNode(
-                      factory.createIdentifier("T"),
+                      factory.createIdentifier("R"),
                       undefined
                     ),
                   ]

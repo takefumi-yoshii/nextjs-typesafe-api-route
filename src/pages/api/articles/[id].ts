@@ -2,7 +2,7 @@ import { Article, articles } from "@/models/articles";
 import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
-export type GetHandler = ApiHandler<{ article: Article }, { id: string }, {}>;
+export type GetHandler = ApiHandler<{ id: string }, {}, { article: Article }>;
 const getHandler: GetHandler = (req, res) => {
   if (!req.query.id) {
     res
@@ -22,9 +22,9 @@ const getHandler: GetHandler = (req, res) => {
 // _____________________________________________________________________________
 //
 export type PutHandler = ApiHandler<
-  { id: string; title: string; body: string },
   { id: string },
-  { title: string; body: string }
+  { title: string; body: string },
+  { id: string; title: string; body: string }
 >;
 const putHandler: PutHandler = (req, res) => {
   if (!req.query.id || !req.body?.title || !req.body?.body) {
@@ -43,7 +43,7 @@ const putHandler: PutHandler = (req, res) => {
 };
 // _____________________________________________________________________________
 //
-export type DeleteHandler = ApiHandler<{ id: string }, { id: string }, {}>;
+export type DeleteHandler = ApiHandler<{ id: string }, {}, { id: string }>;
 const deleteHandler: DeleteHandler = (req, res) => {
   if (!req.query.id) {
     res

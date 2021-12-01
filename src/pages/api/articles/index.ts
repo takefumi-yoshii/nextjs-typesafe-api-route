@@ -3,9 +3,9 @@ import type { ApiHandler } from "@/types/pages/api";
 // _____________________________________________________________________________
 //
 export type GetHandler = ApiHandler<
-  { articles: Article[] },
   { page?: string },
-  {}
+  {},
+  { articles: Article[] }
 >;
 const getHandler: GetHandler = (_req, res) => {
   res.status(200).json({ data: { articles } });
@@ -13,9 +13,9 @@ const getHandler: GetHandler = (_req, res) => {
 // _____________________________________________________________________________
 //
 export type PostHandler = ApiHandler<
-  { id: string; title: string; body: string },
   {},
-  { title: string; body: string }
+  { title: string; body: string },
+  { id: string; title: string; body: string }
 >;
 const postHandler: PostHandler = (req, res) => {
   if (!req.body?.title || !req.body?.body) {

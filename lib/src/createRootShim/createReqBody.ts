@@ -3,7 +3,7 @@ import { factory } from "typescript";
 // ______________________________________________________
 //
 // OUTPUT:
-// type ReqBody<T> = T extends ApiHandler<unknown, unknown, infer I> ? I : never;
+// type ReqBody<T> = T extends ApiHandler<unknown, infer I, unknown> ? I : never;
 //
 export const createReqBody = () =>
   factory.createTypeAliasDeclaration(
@@ -21,7 +21,6 @@ export const createReqBody = () =>
       factory.createTypeReferenceNode(factory.createIdentifier("T"), undefined),
       factory.createTypeReferenceNode(factory.createIdentifier("ApiHandler"), [
         factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
-        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
         factory.createInferTypeNode(
           factory.createTypeParameterDeclaration(
             factory.createIdentifier("I"),
@@ -29,6 +28,7 @@ export const createReqBody = () =>
             undefined
           )
         ),
+        factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
       ]),
       factory.createTypeReferenceNode(factory.createIdentifier("I"), undefined),
       factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword)
