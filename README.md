@@ -9,7 +9,7 @@ First, define API Routes handler with `ApiHandler`.As defined below, it is neces
 ```typescript
 import type { ApiHandler } from "@/types/pages/api";
 
-export type GetHandler = ApiHandler<{ message: string }, { name: string }, {}>;
+export type GetHandler = ApiHandler<{ name: string }, {}, { message: string }>;
 const getHandler: GetHandler = (req, res) => {
   if (!req.query.name) {
     res
