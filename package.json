@@ -8,9 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "watch": "nodemon",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
-    "postinstall": "ts-node ./lib/src/index.ts"
+    "gen:apiroute": "ts-node ./lib/src/index.ts",
+    "gen:apiroute:watch": "nodemon",
+    "postinstall": "npm run gen:apiroute"
   },
   "dependencies": {
     "fs-extra": "^10.0.0",

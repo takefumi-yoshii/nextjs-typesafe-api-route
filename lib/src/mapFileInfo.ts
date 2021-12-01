@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import type { FileInfo } from "./types";
 // ______________________________________________________
 //
 const targetAliases = [
@@ -30,7 +31,7 @@ export function mapFileInfo(
   pagesDir: string,
   program: ts.Program
 ) {
-  return (filePath: string) => {
+  return (filePath: string): FileInfo => {
     const srcPath = filePath;
     const distArr = filePath.replace(src, dist).split("/");
     const distFileName = distArr[distArr.length - 1].replace(".ts", ".d.ts");

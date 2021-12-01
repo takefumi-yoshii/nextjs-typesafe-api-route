@@ -2,10 +2,10 @@ import * as ts from "typescript";
 import { createConfigFileHost } from "./createConfigFileHost";
 // ______________________________________________________
 //
-export function createProgram(
+export const createProgram = (
   searchPath: string,
   configName = "tsconfig.json"
-): ts.Program {
+): ts.Program => {
   const configPath = ts.findConfigFile(
     searchPath,
     ts.sys.fileExists,
@@ -29,4 +29,4 @@ export function createProgram(
     rootNames: parsedCommandLine.fileNames,
     options: parsedCommandLine.options,
   });
-}
+};
