@@ -12,7 +12,7 @@ import type {
   PutReqQuery,
   PutResBody,
 } from "@/types/pages/api";
-import queryString from "query-string";
+import qs from "query-string";
 // _____________________________________________________________________________
 //
 const defaultHeaders = {
@@ -27,29 +27,23 @@ export async function postApiData<
   ReqBody extends PostReqBody[T]
 >(
   key: T,
-  options: {
+  {
+    query,
+    requestInit,
+  }: {
     query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body: ReqBody };
+    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const qs = queryString.stringify(options.query as {});
-  const url = qs ? `${key}?${qs}` : key;
-  const data: ResBody = await fetch(url, {
-    ...options.requestInit,
-    body: options.requestInit?.body
-      ? JSON.stringify(options.requestInit?.body)
-      : undefined,
+  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const { data, error } = await fetch(url, {
+    ...requestInit,
     method: "POST",
-    headers: {
-      ...defaultHeaders,
-      ...options.requestInit?.headers,
-    },
-  }).then(async (res) => {
-    const { data, error } = await res.json();
-    if (error) throw error;
-    return data;
-  });
-  return data;
+    headers: { ...defaultHeaders, ...requestInit?.headers },
+    body: requestInit?.body ? JSON.stringify(requestInit.body) : undefined,
+  }).then((res) => res.json());
+  if (error) throw error;
+  return data as ResBody;
 }
 // _____________________________________________________________________________
 //
@@ -60,29 +54,23 @@ export async function putApiData<
   ReqBody extends PutReqBody[T]
 >(
   key: T,
-  options: {
+  {
+    query,
+    requestInit,
+  }: {
     query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body: ReqBody };
+    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const qs = queryString.stringify(options.query as {});
-  const url = qs ? `${key}?${qs}` : key;
-  const data: ResBody = await fetch(url, {
-    ...options.requestInit,
-    body: options.requestInit?.body
-      ? JSON.stringify(options.requestInit?.body)
-      : undefined,
+  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const { data, error } = await fetch(url, {
+    ...requestInit,
     method: "PUT",
-    headers: {
-      ...defaultHeaders,
-      ...options.requestInit?.headers,
-    },
-  }).then(async (res) => {
-    const { data, error } = await res.json();
-    if (error) throw error;
-    return data;
-  });
-  return data;
+    headers: { ...defaultHeaders, ...requestInit?.headers },
+    body: requestInit?.body ? JSON.stringify(requestInit.body) : undefined,
+  }).then((res) => res.json());
+  if (error) throw error;
+  return data as ResBody;
 }
 // _____________________________________________________________________________
 //
@@ -93,29 +81,23 @@ export async function patchApiData<
   ReqBody extends PatchReqBody[T]
 >(
   key: T,
-  options: {
+  {
+    query,
+    requestInit,
+  }: {
     query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body: ReqBody };
+    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const qs = queryString.stringify(options.query as {});
-  const url = qs ? `${key}?${qs}` : key;
-  const data: ResBody = await fetch(url, {
-    ...options.requestInit,
-    body: options.requestInit?.body
-      ? JSON.stringify(options.requestInit?.body)
-      : undefined,
+  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const { data, error } = await fetch(url, {
+    ...requestInit,
     method: "PATCH",
-    headers: {
-      ...defaultHeaders,
-      ...options.requestInit?.headers,
-    },
-  }).then(async (res) => {
-    const { data, error } = await res.json();
-    if (error) throw error;
-    return data;
-  });
-  return data;
+    headers: { ...defaultHeaders, ...requestInit?.headers },
+    body: requestInit?.body ? JSON.stringify(requestInit.body) : undefined,
+  }).then((res) => res.json());
+  if (error) throw error;
+  return data as ResBody;
 }
 // _____________________________________________________________________________
 //
@@ -126,27 +108,21 @@ export async function deleteApiData<
   ReqBody extends DeleteReqBody[T]
 >(
   key: T,
-  options: {
+  {
+    query,
+    requestInit,
+  }: {
     query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body: ReqBody };
+    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const qs = queryString.stringify(options.query as {});
-  const url = qs ? `${key}?${qs}` : key;
-  const data: ResBody = await fetch(url, {
-    ...options.requestInit,
-    body: options.requestInit?.body
-      ? JSON.stringify(options.requestInit?.body)
-      : undefined,
+  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const { data, error } = await fetch(url, {
+    ...requestInit,
     method: "DELETE",
-    headers: {
-      ...defaultHeaders,
-      ...options.requestInit?.headers,
-    },
-  }).then(async (res) => {
-    const { data, error } = await res.json();
-    if (error) throw error;
-    return data;
-  });
-  return data;
+    headers: { ...defaultHeaders, ...requestInit?.headers },
+    body: requestInit?.body ? JSON.stringify(requestInit.body) : undefined,
+  }).then((res) => res.json());
+  if (error) throw error;
+  return data as ResBody;
 }
