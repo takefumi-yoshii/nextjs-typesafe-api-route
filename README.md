@@ -1,34 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# nextjs-typesafe-api-routes
 
-## Getting Started
+This is a Type-Safe solution for Next.js API Routes.There was a risk of making some mistakes between API Routes and Client.By using this solution, it is possible to build a type-safe environment by linking both type inferences.
 
-First, run the development server:
+## 1.Define API Routes Handlers
 
-```bash
-npm run dev
-# or
-yarn dev
+First, define API Routes handler with `ApiHandler`.As defined below, it is necessary to divide the handler for each request method.
+
+```typescript
+import type { ApiHandler } from "@/types/pages/api";
+
+export type GetHandler = ApiHandler<{ message: string }, { name: string }, {}>;
+const getHandler: GetHandler = (req, res) => {
+  if (!req.query.name) {
+    res
+      .status(400)
+      .json({ error: { httpStatus: 400, message: "Invalid Request" } });
+    return;
+  }
+  res.status(200).json({ data: { message: `hello ${req.query.name}` } });
+};
+
+const handler: ApiHandler = (req, res) => {
+  switch (req.method) {
+    case "GET":
+      getHandler(req, res);
+      break;
+    default:
+      res
+        .status(405)
+        .json({ error: { httpStatus: 405, message: "Method Not Allowed" } });
+  }
+};
+export default handler;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Generics for `ApiHandler`, expect three Generics `ResBody, ReqQuery, ReqBody` in order.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## 2.Generate Type Definitions
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Run below npm scripts, then generate api types into `src/types/pages/api/**/*`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```shell
+$ npm run gen:apitype
+```
 
-## Learn More
+## 3.Check Type Inference in Client
 
-To learn more about Next.js, take a look at the following resources:
+`useApiData` provides type inference from the specified string such as `"/api/greet"`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```typescript
+const { data } = useApiData("/api/greet", { query: { name: "user" } });
+```
