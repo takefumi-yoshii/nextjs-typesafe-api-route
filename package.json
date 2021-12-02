@@ -9,9 +9,11 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
-    "gen:apitype": "ts-node ./lib/src/index.ts",
-    "gen:apitype:watch": "nodemon",
-    "postinstall": "npm run gen:apitype"
+    "postinstall": "npm run gen:apitype",
+    "gen:apitype": "npm run gen:apitype:clean && npm run gen:apitype:build",
+    "gen:apitype:build": "ts-node ./lib/src/index.ts",
+    "gen:apitype:clean": "rimraf ./src/types/pages/api",
+    "gen:apitype:watch": "nodemon"
   },
   "dependencies": {
     "fs-extra": "^10.0.0",
@@ -29,6 +31,7 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.5.0",
     "prettier-plugin-organize-imports": "^2.3.4",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   }
