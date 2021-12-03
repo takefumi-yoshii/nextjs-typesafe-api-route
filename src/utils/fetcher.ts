@@ -2,6 +2,9 @@ import type {
   DeleteReqBody,
   DeleteReqQuery,
   DeleteResBody,
+  GetReqBody,
+  GetReqQuery,
+  GetResBody,
   PatchReqBody,
   PatchReqQuery,
   PatchResBody,
@@ -18,6 +21,33 @@ import qs from "query-string";
 const defaultHeaders = {
   "Content-Type": "application/json",
 };
+// _____________________________________________________________________________
+//
+export async function getApiData<
+  T extends keyof GetResBody,
+  ReqQuery extends GetReqQuery[T],
+  ResBody extends GetResBody[T],
+  ReqBody extends GetReqBody[T]
+>(
+  key: T,
+  {
+    query,
+    requestInit,
+  }: {
+    query?: ReqQuery;
+    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
+  } = {}
+): Promise<ResBody> {
+  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const { data, error } = await fetch(url, {
+    ...requestInit,
+    method: "GET",
+    headers: { ...defaultHeaders, ...requestInit?.headers },
+    body: requestInit?.body ? JSON.stringify(requestInit.body) : undefined,
+  }).then((res) => res.json());
+  if (error) throw error;
+  return data;
+}
 // _____________________________________________________________________________
 //
 export async function postApiData<
