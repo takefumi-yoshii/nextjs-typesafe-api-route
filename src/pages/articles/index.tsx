@@ -1,4 +1,6 @@
 import { useApiData } from "@/hooks/useApiData";
+import { useApiPrefetch } from "@/hooks/useApiPrefetch";
+import { Article } from "@/models/articles";
 import { postApiData } from "@/utils/fetcher";
 import Link from "next/link";
 import React from "react";
@@ -51,6 +53,18 @@ const CreateArticle = () => {
   );
 };
 
+const ArticleLink: React.VFC<{ article: Article }> = ({ article }) => {
+  const onMouseEnter = useApiPrefetch("/api/articles/[id]", {
+    query: { id: article.id },
+    revalidate: 10,
+  });
+  return (
+    <Link href={`/articles/${article.id}`}>
+      <a onMouseEnter={onMouseEnter}>{article.title}</a>
+    </Link>
+  );
+};
+
 export const Articles = () => {
   const { data } = useApiData("/api/articles");
   if (!data) return <>...loading</>;
@@ -60,9 +74,7 @@ export const Articles = () => {
       <ul>
         {data.articles.map((article) => (
           <li key={article.id}>
-            <Link href={`/articles/${article.id}`}>
-              <a>{article.title}</a>
-            </Link>
+            <ArticleLink article={article} />
           </li>
         ))}
       </ul>
