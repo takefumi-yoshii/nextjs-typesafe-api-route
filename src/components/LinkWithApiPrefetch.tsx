@@ -13,7 +13,7 @@ export function LinkWithApiPrefetch<
   prefetchProps: { path, revalidate, query, requestInit },
   children,
 }: {
-  linkProps: Omit<React.ComponentPropsWithoutRef<typeof Link>, "children">;
+  linkProps: React.ComponentPropsWithoutRef<typeof Link>;
   prefetchProps: {
     path: T;
     revalidate?: number;
