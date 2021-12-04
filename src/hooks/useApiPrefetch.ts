@@ -47,12 +47,8 @@ export function useApiPrefetch<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const handleMouseEnter = React.useCallback(
-    () => {
-      const r = options.revalidate ?? 1;
-      if (r < 1) throw new Error("invalid revalidate value.");
-      prefetchApiData(key, options);
-    },
+  const prefetch = React.useCallback(
+    () => prefetchApiData(key, options),
     // eslint-disable-next-line
     []
   );
@@ -60,5 +56,5 @@ export function useApiPrefetch<
     prefetchApiData(key, options);
     // eslint-disable-next-line
   }, []);
-  return handleMouseEnter;
+  return prefetch;
 }
