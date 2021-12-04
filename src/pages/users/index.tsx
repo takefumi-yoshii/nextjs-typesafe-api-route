@@ -1,8 +1,6 @@
+import { LinkWithApiPrefetch } from "@/components/LinkWithApiPrefetch";
 import { useApiData } from "@/hooks/useApiData";
-import { useApiPrefetch } from "@/hooks/useApiPrefetch";
-import { User } from "@/models/users";
 import { postApiData } from "@/utils/fetcher";
-import Link from "next/link";
 import React from "react";
 // _____________________________________________________________________________
 //
@@ -38,18 +36,6 @@ const CreateUser = () => {
   );
 };
 
-const UserLink: React.VFC<{ user: User }> = ({ user }) => {
-  const prefetch = useApiPrefetch("/api/users/[id]", {
-    query: { id: user.id },
-    revalidate: 10,
-  });
-  return (
-    <Link href={`/users/${user.id}`}>
-      <a onMouseEnter={prefetch}>{user.name}</a>
-    </Link>
-  );
-};
-
 export const Users = () => {
   const { data } = useApiData("/api/users");
   if (!data) return <>...loading</>;
@@ -59,7 +45,16 @@ export const Users = () => {
       <ul>
         {data.users.map((user) => (
           <li key={user.id}>
-            <UserLink user={user} />
+            <LinkWithApiPrefetch
+              linkProps={{ href: `/users/${user.id}` }}
+              prefetchProps={{
+                path: "/api/users/[id]",
+                query: { id: user.id },
+                revalidate: 10,
+              }}
+            >
+              {user.name}
+            </LinkWithApiPrefetch>
           </li>
         ))}
       </ul>

@@ -1,8 +1,6 @@
+import { LinkWithApiPrefetch } from "@/components/LinkWithApiPrefetch";
 import { useApiData } from "@/hooks/useApiData";
-import { useApiPrefetch } from "@/hooks/useApiPrefetch";
-import { Article } from "@/models/articles";
 import { postApiData } from "@/utils/fetcher";
-import Link from "next/link";
 import React from "react";
 // _____________________________________________________________________________
 //
@@ -53,18 +51,6 @@ const CreateArticle = () => {
   );
 };
 
-const ArticleLink: React.VFC<{ article: Article }> = ({ article }) => {
-  const prefetch = useApiPrefetch("/api/articles/[id]", {
-    query: { id: article.id },
-    revalidate: 10,
-  });
-  return (
-    <Link href={`/articles/${article.id}`}>
-      <a onMouseEnter={prefetch}>{article.title}</a>
-    </Link>
-  );
-};
-
 export const Articles = () => {
   const { data } = useApiData("/api/articles");
   if (!data) return <>...loading</>;
@@ -74,7 +60,16 @@ export const Articles = () => {
       <ul>
         {data.articles.map((article) => (
           <li key={article.id}>
-            <ArticleLink article={article} />
+            <LinkWithApiPrefetch
+              linkProps={{ href: `/articles/${article.id}` }}
+              prefetchProps={{
+                path: "/api/articles/[id]",
+                query: { id: article.id },
+                revalidate: 10,
+              }}
+            >
+              {article.title}
+            </LinkWithApiPrefetch>
           </li>
         ))}
       </ul>

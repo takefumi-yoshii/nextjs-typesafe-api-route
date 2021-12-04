@@ -1,39 +1,45 @@
-import { useApiPrefetch } from "@/hooks/useApiPrefetch";
-import Link from "next/link";
+import { LinkWithApiPrefetch } from "@/components/LinkWithApiPrefetch";
 import React from "react";
 // _____________________________________________________________________________
 //
-const revalidate = 10;
-
 const Layout: React.FC = ({ children }) => {
-  const prefetchGreet = useApiPrefetch("/api/greet", {
-    query: { name: "user" },
-    revalidate,
-  });
-  const prefetchUsers = useApiPrefetch("/api/users", {
-    revalidate,
-  });
-  const prefetchArticles = useApiPrefetch("/api/articles", {
-    revalidate,
-  });
   return (
     <div>
       <nav>
         <ul>
           <li>
-            <Link href="/">
-              <a onMouseEnter={prefetchGreet}>Home</a>
-            </Link>
+            <LinkWithApiPrefetch
+              linkProps={{ href: "/" }}
+              prefetchProps={{
+                path: "/api/greet",
+                query: { name: "user" },
+                revalidate: 10,
+              }}
+            >
+              Home
+            </LinkWithApiPrefetch>
           </li>
           <li>
-            <Link href="/users">
-              <a onMouseEnter={prefetchUsers}>Users</a>
-            </Link>
+            <LinkWithApiPrefetch
+              linkProps={{ href: "/users" }}
+              prefetchProps={{
+                path: "/api/users",
+                revalidate: 10,
+              }}
+            >
+              Users
+            </LinkWithApiPrefetch>
           </li>
           <li>
-            <Link href="/articles">
-              <a onMouseEnter={prefetchArticles}>Articles</a>
-            </Link>
+            <LinkWithApiPrefetch
+              linkProps={{ href: "/articles" }}
+              prefetchProps={{
+                path: "/api/articles",
+                revalidate: 10,
+              }}
+            >
+              Articles
+            </LinkWithApiPrefetch>
           </li>
         </ul>
       </nav>
