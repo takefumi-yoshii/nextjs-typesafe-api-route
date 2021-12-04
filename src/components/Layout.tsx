@@ -6,14 +6,14 @@ import React from "react";
 const revalidate = 10;
 
 const Layout: React.FC = ({ children }) => {
-  const handleMouseEnterHome = useApiPrefetch("/api/greet", {
+  const prefetchGreet = useApiPrefetch("/api/greet", {
     query: { name: "user" },
     revalidate,
   });
-  const handleMouseEnterUsers = useApiPrefetch("/api/users", {
+  const prefetchUsers = useApiPrefetch("/api/users", {
     revalidate,
   });
-  const handleMouseEnterArticles = useApiPrefetch("/api/articles", {
+  const prefetchArticles = useApiPrefetch("/api/articles", {
     revalidate,
   });
   return (
@@ -22,17 +22,17 @@ const Layout: React.FC = ({ children }) => {
         <ul>
           <li>
             <Link href="/">
-              <a onMouseEnter={handleMouseEnterHome}>Home</a>
+              <a onMouseEnter={prefetchGreet}>Home</a>
             </Link>
           </li>
           <li>
             <Link href="/users">
-              <a onMouseEnter={handleMouseEnterUsers}>Users</a>
+              <a onMouseEnter={prefetchUsers}>Users</a>
             </Link>
           </li>
           <li>
             <Link href="/articles">
-              <a onMouseEnter={handleMouseEnterArticles}>Articles</a>
+              <a onMouseEnter={prefetchArticles}>Articles</a>
             </Link>
           </li>
         </ul>

@@ -54,13 +54,13 @@ const CreateArticle = () => {
 };
 
 const ArticleLink: React.VFC<{ article: Article }> = ({ article }) => {
-  const onMouseEnter = useApiPrefetch("/api/articles/[id]", {
+  const prefetch = useApiPrefetch("/api/articles/[id]", {
     query: { id: article.id },
     revalidate: 10,
   });
   return (
     <Link href={`/articles/${article.id}`}>
-      <a onMouseEnter={onMouseEnter}>{article.title}</a>
+      <a onMouseEnter={prefetch}>{article.title}</a>
     </Link>
   );
 };

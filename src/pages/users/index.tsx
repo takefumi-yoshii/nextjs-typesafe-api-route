@@ -39,13 +39,13 @@ const CreateUser = () => {
 };
 
 const UserLink: React.VFC<{ user: User }> = ({ user }) => {
-  const onMouseEnter = useApiPrefetch("/api/users/[id]", {
+  const prefetch = useApiPrefetch("/api/users/[id]", {
     query: { id: user.id },
     revalidate: 10,
   });
   return (
     <Link href={`/users/${user.id}`}>
-      <a onMouseEnter={onMouseEnter}>{user.name}</a>
+      <a onMouseEnter={prefetch}>{user.name}</a>
     </Link>
   );
 };
