@@ -29,7 +29,7 @@ export async function getApiData<
   ResBody extends GetResBody[T],
   ReqBody extends GetReqBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -38,7 +38,7 @@ export async function getApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = query ? `${path}?${qs.stringify(query)}` : path;
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "GET",
@@ -56,7 +56,7 @@ export async function postApiData<
   ResBody extends PostResBody[T],
   ReqBody extends PostReqBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -65,7 +65,7 @@ export async function postApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = query ? `${path}?${qs.stringify(query)}` : path;
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "POST",
@@ -83,7 +83,7 @@ export async function putApiData<
   ResBody extends PutResBody[T],
   ReqBody extends PutReqBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -92,7 +92,7 @@ export async function putApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = query ? `${path}?${qs.stringify(query)}` : path;
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "PUT",
@@ -110,7 +110,7 @@ export async function patchApiData<
   ResBody extends PatchResBody[T],
   ReqBody extends PatchReqBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -119,7 +119,7 @@ export async function patchApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = query ? `${path}?${qs.stringify(query)}` : path;
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "PATCH",
@@ -137,7 +137,7 @@ export async function deleteApiData<
   ResBody extends DeleteResBody[T],
   ReqBody extends DeleteReqBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -146,7 +146,7 @@ export async function deleteApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = query ? `${path}?${qs.stringify(query)}` : path;
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "DELETE",
