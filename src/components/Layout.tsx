@@ -10,7 +10,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <LinkWithApiPrefetch
               linkProps={{ href: "/" }}
-              prefetchProps={{
+              apiPrefetch={{
                 path: "/api/greet",
                 query: { name: "user" },
                 revalidate: 10,
@@ -22,7 +22,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <LinkWithApiPrefetch
               linkProps={{ href: "/users" }}
-              prefetchProps={{
+              apiPrefetch={{
                 path: "/api/users",
                 revalidate: 10,
               }}
@@ -33,7 +33,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <LinkWithApiPrefetch
               linkProps={{ href: "/articles" }}
-              prefetchProps={{
+              apiPrefetch={{
                 path: "/api/articles",
                 revalidate: 10,
               }}

@@ -47,7 +47,7 @@ export const Users = () => {
           <li key={user.id}>
             <LinkWithApiPrefetch
               linkProps={{ href: `/users/${user.id}` }}
-              prefetchProps={{
+              apiPrefetch={{
                 path: "/api/users/[id]",
                 query: { id: user.id },
                 revalidate: 10,

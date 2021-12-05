@@ -10,11 +10,11 @@ export function LinkWithApiPrefetch<
   ReqBody extends GetReqBody[T]
 >({
   linkProps,
-  prefetchProps: { path, revalidate, query, requestInit },
+  apiPrefetch: { path, revalidate, query, requestInit },
   children,
 }: {
   linkProps: React.ComponentPropsWithoutRef<typeof Link>;
-  prefetchProps: {
+  apiPrefetch: {
     path: T;
     revalidate?: number;
     query?: ReqQuery;
