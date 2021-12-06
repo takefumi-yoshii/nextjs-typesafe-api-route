@@ -23,7 +23,7 @@ export function pagesFileInfo(src: string, dist: string, program: ts.Program) {
   return (filePath: string): PagesFileInfo => {
     const srcPath = filePath;
     const distArr = filePath.replace(src, dist).split("/");
-    const distFileName = distArr[distArr.length - 1].replace(".tsx", ".d.tsx");
+    const distFileName = distArr[distArr.length - 1].replace(".tsx", ".d.ts");
     const distDir = distArr.splice(0, distArr.length - 1).join("/");
     const distPath = `${distDir}/${distFileName}`;
     const sourceFile = program.getSourceFile(srcPath);
