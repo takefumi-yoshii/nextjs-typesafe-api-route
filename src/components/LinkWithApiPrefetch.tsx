@@ -1,8 +1,7 @@
-import { Link } from "@/components/Link";
+import { Link, LinkProps } from "@/components/Link";
 import { useApiPrefetch } from "@/hooks/useApiPrefetch";
 import type { Pages } from "@/types/pages";
 import type { GetReqBody, GetReqQuery, GetResBody } from "@/types/pages/api";
-import NextLink from "next/link";
 import React from "react";
 // _____________________________________________________________________________
 //
@@ -17,10 +16,7 @@ export function LinkWithApiPrefetch<
   apiPrefetch,
   children,
 }: {
-  linkProps: Omit<React.ComponentPropsWithoutRef<typeof NextLink>, "href"> & {
-    path: PagePath;
-    query?: PageQuery;
-  };
+  linkProps: LinkProps<PagePath, PageQuery>;
   apiPrefetch: {
     path: ApiPath;
     revalidate?: number;

@@ -4,13 +4,19 @@ import NextLink from "next/link";
 import React from "react";
 // _____________________________________________________________________________
 //
-export function Link<T extends keyof Pages, Q extends Pages[T]>({
+export type LinkProps<P, Q> = Omit<
+  React.ComponentPropsWithoutRef<typeof NextLink>,
+  "href"
+> & {
+  path: P;
+  query?: Q;
+};
+// _____________________________________________________________________________
+//
+export function Link<P extends keyof Pages, Q extends Pages[P]>({
   path,
   query,
   ...props
-}: Omit<React.ComponentPropsWithoutRef<typeof NextLink>, "href"> & {
-  path: T;
-  query?: Q;
-}) {
+}: LinkProps<P, Q>) {
   return <NextLink {...props} href={mapPathParamFromQuery(path, query)} />;
 }
