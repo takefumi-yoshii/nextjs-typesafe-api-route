@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"lib/**/*.{ts,tsx}\"",
+    "test": "jest",
     "postinstall": "npm run gen:apitype",
     "gen:apitype": "npm run gen:apitype:clean && npm run gen:apitype:build",
     "gen:apitype:build": "ts-node ./lib/src/index.ts",
