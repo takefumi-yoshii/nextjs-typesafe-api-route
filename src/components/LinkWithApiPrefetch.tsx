@@ -13,7 +13,7 @@ export function LinkWithApiPrefetch<
   ReqBody extends GetReqBody[ApiPath]
 >({
   linkProps,
-  apiPrefetch,
+  apiPrefetch: { path: apiPrefetchPath, ...apiPrefetchOptions },
   children,
 }: {
   linkProps: LinkProps<PagePath, PageQuery>;
@@ -22,14 +22,14 @@ export function LinkWithApiPrefetch<
     revalidate?: number;
     query?: ReqQuery;
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
+    ignoreRoute?: PagePath;
   };
   children?: React.ReactNode;
 }) {
-  const [prefetch, setIntersectionRef] = useApiPrefetch(apiPrefetch.path, {
-    revalidate: apiPrefetch.revalidate,
-    query: apiPrefetch.query,
-    requestInit: apiPrefetch.requestInit,
-  });
+  const [prefetch, setIntersectionRef] = useApiPrefetch(
+    apiPrefetchPath,
+    apiPrefetchOptions
+  );
   return (
     <Link {...linkProps}>
       <a onMouseEnter={prefetch} ref={setIntersectionRef}>

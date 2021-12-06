@@ -13,6 +13,7 @@ const Layout: React.FC = ({ children }) => {
               apiPrefetch={{
                 path: "/api/greet",
                 query: { name: "user" },
+                ignoreRoute: "/",
               }}
             >
               Home
@@ -23,6 +24,7 @@ const Layout: React.FC = ({ children }) => {
               linkProps={{ path: "/users" }}
               apiPrefetch={{
                 path: "/api/users",
+                ignoreRoute: "/users",
               }}
             >
               Users
@@ -33,6 +35,7 @@ const Layout: React.FC = ({ children }) => {
               linkProps={{ path: "/articles" }}
               apiPrefetch={{
                 path: "/api/articles",
+                ignoreRoute: "/articles",
               }}
             >
               Articles
