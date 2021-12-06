@@ -1,4 +1,4 @@
-import { LinkWithApiPrefetch } from "@/components/LinkWithApiPrefetch";
+import { Link } from "@/components/Link";
 import { useApiData } from "@/hooks/useApiData";
 import { postApiData } from "@/utils/fetcher";
 import React from "react";
@@ -45,15 +45,16 @@ export const Users = () => {
       <ul>
         {data.users.map((user) => (
           <li key={user.id}>
-            <LinkWithApiPrefetch
-              linkProps={{ path: "/users/[id]", query: { id: user.id } }}
+            <Link
+              path="/users/[id]"
+              query={{ id: user.id }}
               apiPrefetch={{
                 path: "/api/users/[id]",
                 query: { id: user.id },
               }}
             >
               {user.name}
-            </LinkWithApiPrefetch>
+            </Link>
           </li>
         ))}
       </ul>

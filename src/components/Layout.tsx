@@ -1,4 +1,4 @@
-import { LinkWithApiPrefetch } from "@/components/LinkWithApiPrefetch";
+import { Link } from "@/components/Link";
 import React from "react";
 // _____________________________________________________________________________
 //
@@ -8,8 +8,8 @@ const Layout: React.FC = ({ children }) => {
       <nav>
         <ul>
           <li>
-            <LinkWithApiPrefetch
-              linkProps={{ path: "/" }}
+            <Link
+              path="/"
               apiPrefetch={{
                 path: "/api/greet",
                 query: { name: "user" },
@@ -17,29 +17,29 @@ const Layout: React.FC = ({ children }) => {
               }}
             >
               Home
-            </LinkWithApiPrefetch>
+            </Link>
           </li>
           <li>
-            <LinkWithApiPrefetch
-              linkProps={{ path: "/users" }}
+            <Link
+              path="/users"
               apiPrefetch={{
                 path: "/api/users",
                 ignoreRoute: "/users",
               }}
             >
               Users
-            </LinkWithApiPrefetch>
+            </Link>
           </li>
           <li>
-            <LinkWithApiPrefetch
-              linkProps={{ path: "/articles" }}
+            <Link
+              path="/articles"
               apiPrefetch={{
                 path: "/api/articles",
                 ignoreRoute: "/articles",
               }}
             >
               Articles
-            </LinkWithApiPrefetch>
+            </Link>
           </li>
         </ul>
       </nav>
