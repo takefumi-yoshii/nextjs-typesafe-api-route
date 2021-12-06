@@ -13,7 +13,7 @@
     "postinstall": "npm run gen:apitype",
     "gen:apitype": "npm run gen:apitype:clean && npm run gen:apitype:build",
     "gen:apitype:build": "ts-node ./lib/src/index.ts",
-    "gen:apitype:clean": "rimraf ./src/types/pages/api",
+    "gen:apitype:clean": "rimraf ./src/types/pages",
     "gen:apitype:watch": "nodemon"
   },
   "dependencies": {
