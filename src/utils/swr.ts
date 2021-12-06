@@ -32,5 +32,5 @@ export function prefetchApiData<
   const shouldPrefetch = !timestamp ? true : timestamp - (now - r * 1000) < 0;
   if (!shouldPrefetch) return Promise.resolve();
   prefetchTimestamp.set(url, now);
-  return mutate(url, () => getApiData(path, options));
+  return mutate(url, () => getApiData(path, options), false);
 }
