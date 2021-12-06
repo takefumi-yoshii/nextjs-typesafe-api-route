@@ -9,25 +9,20 @@ export function useApiPrefetch<
   ReqQuery extends GetReqQuery[T],
   ReqBody extends GetReqBody[T]
 >(
-  key: T,
+  path: T,
   options: {
     revalidate?: number;
     query?: ReqQuery;
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ) {
-  const [setIntersectionRef, isVisible] = useIntersection({
+  const [setIntersectionRef] = useIntersection({
     rootMargin: "200px",
   });
   const prefetch = React.useCallback(
-    () => prefetchApiData(key, options),
+    () => prefetchApiData(path, options),
     // eslint-disable-next-line
     []
   );
-  React.useEffect(() => {
-    if (!isVisible) return;
-    prefetchApiData(key, options);
-    // eslint-disable-next-line
-  }, [isVisible]);
   return [prefetch, setIntersectionRef] as const;
 }

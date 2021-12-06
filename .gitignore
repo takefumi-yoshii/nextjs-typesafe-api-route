@@ -36,5 +36,5 @@ tsconfig.tsbuildinfo
 .vscode
 
 # generated
-src/types/pages*
+src/types/pages/*
 

@@ -61,11 +61,13 @@ export const Articles = () => {
         {data.articles.map((article) => (
           <li key={article.id}>
             <LinkWithApiPrefetch
-              linkProps={{ href: `/articles/${article.id}` }}
+              linkProps={{
+                path: "/articles/[id]",
+                query: { id: article.id },
+              }}
               apiPrefetch={{
                 path: "/api/articles/[id]",
                 query: { id: article.id },
-                revalidate: 10,
               }}
             >
               {article.title}

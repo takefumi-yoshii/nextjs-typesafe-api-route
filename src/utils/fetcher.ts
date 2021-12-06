@@ -15,7 +15,7 @@ import type {
   PutReqQuery,
   PutResBody,
 } from "@/types/pages/api";
-import qs from "query-string";
+import { mapPathParamFromQuery } from "@/utils/mapPathParamFromQuery";
 // _____________________________________________________________________________
 //
 const defaultHeaders = {
@@ -38,7 +38,7 @@ export async function getApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${path}?${qs.stringify(query)}` : path;
+  const url = mapPathParamFromQuery(path, query);
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "GET",
@@ -65,7 +65,7 @@ export async function postApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${path}?${qs.stringify(query)}` : path;
+  const url = mapPathParamFromQuery(path, query);
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "POST",
@@ -92,7 +92,7 @@ export async function putApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${path}?${qs.stringify(query)}` : path;
+  const url = mapPathParamFromQuery(path, query);
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "PUT",
@@ -119,7 +119,7 @@ export async function patchApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${path}?${qs.stringify(query)}` : path;
+  const url = mapPathParamFromQuery(path, query);
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "PATCH",
@@ -146,7 +146,7 @@ export async function deleteApiData<
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody> {
-  const url = query ? `${path}?${qs.stringify(query)}` : path;
+  const url = mapPathParamFromQuery(path, query);
   const { data, error } = await fetch(url, {
     ...requestInit,
     method: "DELETE",

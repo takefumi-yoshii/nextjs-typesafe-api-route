@@ -9,11 +9,10 @@ const Layout: React.FC = ({ children }) => {
         <ul>
           <li>
             <LinkWithApiPrefetch
-              linkProps={{ href: "/" }}
+              linkProps={{ path: "/" }}
               apiPrefetch={{
                 path: "/api/greet",
                 query: { name: "user" },
-                revalidate: 10,
               }}
             >
               Home
@@ -21,10 +20,9 @@ const Layout: React.FC = ({ children }) => {
           </li>
           <li>
             <LinkWithApiPrefetch
-              linkProps={{ href: "/users" }}
+              linkProps={{ path: "/users" }}
               apiPrefetch={{
                 path: "/api/users",
-                revalidate: 10,
               }}
             >
               Users
@@ -32,10 +30,9 @@ const Layout: React.FC = ({ children }) => {
           </li>
           <li>
             <LinkWithApiPrefetch
-              linkProps={{ href: "/articles" }}
+              linkProps={{ path: "/articles" }}
               apiPrefetch={{
                 path: "/api/articles",
-                revalidate: 10,
               }}
             >
               Articles

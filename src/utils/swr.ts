@@ -1,9 +1,10 @@
 import type { GetReqBody, GetReqQuery, GetResBody } from "@/types/pages/api";
 import { getApiData } from "@/utils/fetcher";
-import qs from "query-string";
+import { mapPathParamFromQuery } from "@/utils/mapPathParamFromQuery";
 import { mutate } from "swr";
 // _____________________________________________________________________________
 //
+const defaultRevalidate = 24 * 60 * 60;
 const prefetchTimestamp = new Map<string, number>();
 export function clearPrefetchTimestamp() {
   prefetchTimestamp.clear();
@@ -16,20 +17,20 @@ export function prefetchApiData<
   ResBody extends GetResBody[T],
   ReqBody extends GetReqBody[T]
 >(
-  key: T,
+  path: T,
   options: {
     revalidate?: number;
     query?: ReqQuery;
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   } = {}
 ): Promise<ResBody | void> {
-  const r = options.revalidate ?? 1;
+  const r = options.revalidate ?? defaultRevalidate;
   if (r < 1) throw new Error("invalid revalidate value.");
-  const url = options.query ? `${key}?${qs.stringify(options.query)}` : key;
+  const url = mapPathParamFromQuery(path, options.query);
   const now = Date.now();
   const timestamp = prefetchTimestamp.get(url);
   const shouldPrefetch = !timestamp ? true : timestamp - (now - r * 1000) < 0;
   if (!shouldPrefetch) return Promise.resolve();
   prefetchTimestamp.set(url, now);
-  return mutate(url, () => getApiData(key, options));
+  return mutate(url, () => getApiData(path, options));
 }

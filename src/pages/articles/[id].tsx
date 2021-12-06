@@ -1,7 +1,11 @@
 import { useApiData } from "@/hooks/useApiData";
+import type { PageQuery } from "@/types/pages";
 import { deleteApiData } from "@/utils/fetcher";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
+// _____________________________________________________________________________
+//
+export type Query = PageQuery<"id">;
 // _____________________________________________________________________________
 //
 const DeleteArticle = ({ id }: { id: string }) => {

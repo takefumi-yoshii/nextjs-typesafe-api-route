@@ -1,35 +1,42 @@
+import { Link } from "@/components/Link";
 import { useApiPrefetch } from "@/hooks/useApiPrefetch";
+import type { Pages } from "@/types/pages";
 import type { GetReqBody, GetReqQuery, GetResBody } from "@/types/pages/api";
-import Link from "next/link";
+import NextLink from "next/link";
 import React from "react";
 // _____________________________________________________________________________
 //
 export function LinkWithApiPrefetch<
-  T extends keyof GetResBody,
-  ReqQuery extends GetReqQuery[T],
-  ReqBody extends GetReqBody[T]
+  PagePath extends keyof Pages,
+  PageQuery extends Pages[PagePath],
+  ApiPath extends keyof GetResBody,
+  ReqQuery extends GetReqQuery[ApiPath],
+  ReqBody extends GetReqBody[ApiPath]
 >({
   linkProps,
-  apiPrefetch: { path, revalidate, query, requestInit },
+  apiPrefetch,
   children,
 }: {
-  linkProps: React.ComponentPropsWithoutRef<typeof Link>;
+  linkProps: Omit<React.ComponentPropsWithoutRef<typeof NextLink>, "href"> & {
+    path: PagePath;
+    query?: PageQuery;
+  };
   apiPrefetch: {
-    path: T;
+    path: ApiPath;
     revalidate?: number;
     query?: ReqQuery;
     requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
   };
   children?: React.ReactNode;
 }) {
-  const [prefetch, ref] = useApiPrefetch(path, {
-    revalidate,
-    query,
-    requestInit,
+  const [prefetch, setIntersectionRef] = useApiPrefetch(apiPrefetch.path, {
+    revalidate: apiPrefetch.revalidate,
+    query: apiPrefetch.query,
+    requestInit: apiPrefetch.requestInit,
   });
   return (
     <Link {...linkProps}>
-      <a onMouseEnter={prefetch} ref={ref}>
+      <a onMouseEnter={prefetch} ref={setIntersectionRef}>
         {children}
       </a>
     </Link>

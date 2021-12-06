@@ -1,5 +1,5 @@
 import type { Error, GetReqQuery, GetResBody } from "@/types/pages/api";
-import qs from "query-string";
+import { mapPathParamFromQuery } from "@/utils/mapPathParamFromQuery";
 import useSWR, { SWRConfiguration } from "swr";
 // _____________________________________________________________________________
 //
@@ -8,7 +8,7 @@ export function useApiData<
   ReqQuery extends GetReqQuery[T],
   ResBody extends GetResBody[T]
 >(
-  key: T,
+  path: T,
   {
     query,
     requestInit,
@@ -19,7 +19,7 @@ export function useApiData<
     swrConfig?: SWRConfiguration;
   } = {}
 ) {
-  const url = query ? `${key}?${qs.stringify(query)}` : key;
+  const url = mapPathParamFromQuery(path, query);
   return useSWR<ResBody, Error["error"]>(
     url,
     async (): Promise<ResBody> => {
