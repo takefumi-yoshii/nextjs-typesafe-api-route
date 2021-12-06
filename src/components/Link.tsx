@@ -22,21 +22,12 @@ function Prefetch<
   ReqQuery extends GetReqQuery[ApiPath],
   ReqBody extends GetReqBody[ApiPath]
 >({
-  path,
-  revalidate,
-  query,
-  requestInit,
-  ignoreRoute,
   children,
+  ...options
 }: Prefetch<ApiPath, ReqQuery, ReqBody, PagePath> & {
   children: React.ReactNode;
 }) {
-  const [prefetch, setIntersectionRef] = useApiPrefetch(path, {
-    revalidate,
-    query,
-    requestInit,
-    ignoreRoute,
-  });
+  const [prefetch, setIntersectionRef] = useApiPrefetch(options);
   return (
     <span onMouseEnter={prefetch} ref={setIntersectionRef}>
       {children}

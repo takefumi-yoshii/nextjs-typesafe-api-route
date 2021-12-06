@@ -11,27 +11,28 @@ export function useApiPrefetch<
   ApiPath extends keyof GetResBody,
   ReqQuery extends GetReqQuery[ApiPath],
   ReqBody extends GetReqBody[ApiPath]
->(
-  path: ApiPath,
-  options: {
-    revalidate?: number;
-    query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
-    ignoreRoute?: PagePath;
-  } = {}
-) {
+>({
+  ignoreRoute,
+  ...options
+}: {
+  path: ApiPath;
+  revalidate?: number;
+  query?: ReqQuery;
+  requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
+  ignoreRoute?: PagePath;
+}) {
   const { pathname } = useRouter();
   const { ref, inView } = useInView({
     rootMargin: "200px",
   });
   const prefetch = React.useCallback(
-    () => prefetchApiData(path, options),
+    () => prefetchApiData(options),
     // eslint-disable-next-line
     []
   );
   React.useEffect(() => {
-    if (!inView || options.ignoreRoute === pathname) return;
-    prefetchApiData(path, options);
+    if (!inView || ignoreRoute === pathname) return;
+    prefetchApiData(options);
     // eslint-disable-next-line
   }, [inView, pathname]);
   return [prefetch, ref] as const;

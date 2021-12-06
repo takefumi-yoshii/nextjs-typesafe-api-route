@@ -12,25 +12,28 @@ export function clearPrefetchTimestamp() {
 // _____________________________________________________________________________
 //
 export function prefetchApiData<
-  T extends keyof GetResBody,
-  ReqQuery extends GetReqQuery[T],
-  ResBody extends GetResBody[T],
-  ReqBody extends GetReqBody[T]
->(
-  path: T,
-  options: {
-    revalidate?: number;
-    query?: ReqQuery;
-    requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
-  } = {}
-): Promise<ResBody | void> {
-  const r = options.revalidate ?? defaultRevalidate;
+  ApiPath extends keyof GetResBody,
+  ReqQuery extends GetReqQuery[ApiPath],
+  ResBody extends GetResBody[ApiPath],
+  ReqBody extends GetReqBody[ApiPath]
+>({
+  path,
+  revalidate,
+  query,
+  requestInit,
+}: {
+  path: ApiPath;
+  revalidate?: number;
+  query?: ReqQuery;
+  requestInit?: Omit<RequestInit, "body"> & { body?: ReqBody };
+}): Promise<ResBody | void> {
+  const r = revalidate ?? defaultRevalidate;
   if (r < 1) throw new Error("invalid revalidate value.");
-  const url = mapPathParamFromQuery(path, options.query);
+  const url = mapPathParamFromQuery(path, query);
   const now = Date.now();
   const timestamp = prefetchTimestamp.get(url);
   const shouldPrefetch = !timestamp ? true : timestamp - (now - r * 1000) < 0;
   if (!shouldPrefetch) return Promise.resolve();
   prefetchTimestamp.set(url, now);
-  return mutate(url, () => getApiData(path, options), false);
+  return mutate(url, () => getApiData(path, { query, requestInit }), false);
 }
