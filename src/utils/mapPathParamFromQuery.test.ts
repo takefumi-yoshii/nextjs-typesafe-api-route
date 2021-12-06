@@ -23,6 +23,11 @@ describe("utils/mapPathParamFromQuery", () => {
     test("一致する Query が付与されている場合、PathParam にマッピングされる", () => {
       expect(mapPathParamFromQuery(PATH, { id: "1" })).toBe("/path/to/1");
     });
+    test("一致する Query が文字列ではない場合、例外を投げる", () => {
+      expect(() =>
+        mapPathParamFromQuery(PATH, { id: ["1", "2", "3"] })
+      ).toThrow();
+    });
     test("一致する Query が付与されている場合、PathParam にマッピングされ、QueryParam が付与される", () => {
       expect(mapPathParamFromQuery(PATH, { id: "1", name: "1" })).toBe(
         "/path/to/1?name=1"
