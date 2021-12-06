@@ -14,12 +14,19 @@ export const createModuleShim = ({
   pagePath: string;
   importPath: string;
   moduleNameSpaece: string;
-}) => [
-  createImportDeclarations(typeAliases, importPath),
-  factory.createModuleDeclaration(
-    undefined,
-    [factory.createModifier(ts.SyntaxKind.DeclareKeyword)],
-    factory.createStringLiteral(moduleNameSpaece),
-    factory.createModuleBlock([createShim(pagePath, !!typeAliases.length)])
-  ),
-];
+}) => {
+  const hasQuery = !!typeAliases.length;
+  const node: (ts.ImportDeclaration | ts.ModuleDeclaration)[] = [];
+  if (hasQuery) {
+    node.push(createImportDeclarations(typeAliases, importPath));
+  }
+  node.push(
+    factory.createModuleDeclaration(
+      undefined,
+      [factory.createModifier(ts.SyntaxKind.DeclareKeyword)],
+      factory.createStringLiteral(moduleNameSpaece),
+      factory.createModuleBlock([createShim(pagePath, hasQuery)])
+    )
+  );
+  return node;
+};
