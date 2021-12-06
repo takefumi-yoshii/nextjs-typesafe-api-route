@@ -1,6 +1,6 @@
+import { emitFile } from "../emitFile";
+import { printList } from "../printList";
 import { createRootShim } from "./createRootShim";
-import { emitFile } from "./emitFile";
-import { printList } from "./printList";
 // ______________________________________________________
 //
 export function emitRootShim(disrDir: string, moduleNameSpaece: string) {

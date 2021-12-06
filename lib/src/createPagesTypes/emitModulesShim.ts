@@ -1,21 +1,21 @@
+import { emitFile } from "../emitFile";
+import { printList } from "../printList";
+import type { PagesFileInfo } from "../types";
 import { createModuleShim } from "./createModuleShim";
-import { emitFile } from "./emitFile";
-import { printList } from "./printList";
-import type { FileInfo } from "./types";
 // ______________________________________________________
 //
 export function emitModulesShim(
-  fileInfos: FileInfo[],
+  pagesFileInfos: PagesFileInfo[],
   moduleNameSpaece: string
 ) {
-  fileInfos.map((info) => {
+  pagesFileInfos.map((info) => {
     emitFile(
       info.distDir,
       info.distPath,
       printList(
         createModuleShim({
-          methods: info.methodTypes,
-          apiPath: info.apiPath,
+          typeAliases: info.typeAliases,
+          pagePath: info.pagePath,
           importPath: info.importPath,
           moduleNameSpaece,
         })

@@ -1,8 +1,8 @@
 import * as ts from "typescript";
-import type { FileInfo } from "./types";
+import type { ApiRoutesFileInfo } from "../types";
 // ______________________________________________________
 //
-const targetAliases = [
+const typeAliases = [
   "GetHandler",
   "PostHandler",
   "PutHandler",
@@ -15,7 +15,7 @@ function getMethodTypes(sourceFile?: ts.SourceFile) {
     sourceFile.forEachChild((node) => {
       if (ts.isTypeAliasDeclaration(node)) {
         const name = node.name.escapedText.toString();
-        if (targetAliases.includes(name)) {
+        if (typeAliases.includes(name)) {
           buf.push(name.replace("Handler", ""));
         }
       }
@@ -25,13 +25,13 @@ function getMethodTypes(sourceFile?: ts.SourceFile) {
 }
 // ______________________________________________________
 //
-export function mapFileInfo(
+export function apiRoutesFileInfo(
   src: string,
   dist: string,
   pagesDir: string,
   program: ts.Program
 ) {
-  return (filePath: string): FileInfo => {
+  return (filePath: string): ApiRoutesFileInfo => {
     const srcPath = filePath;
     const distArr = filePath.replace(src, dist).split("/");
     const distFileName = distArr[distArr.length - 1].replace(".ts", ".d.ts");

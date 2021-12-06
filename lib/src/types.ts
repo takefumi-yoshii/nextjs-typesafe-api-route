@@ -4,8 +4,16 @@ export type FileInfo = {
   distFileName: string;
   distDir: string;
   filePath: string;
-  methodTypes: string[];
   importPath: string;
+};
+
+export type PagesFileInfo = FileInfo & {
+  typeAliases: string[];
+  pagePath: string;
+};
+
+export type ApiRoutesFileInfo = FileInfo & {
+  methodTypes: string[];
   apiPath: string;
 };
 
