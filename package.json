@@ -24,10 +24,14 @@
     "swr": "^1.1.0"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.118",
+    "@swc/jest": "^0.2.11",
     "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^27.0.3",
     "@types/react": "^17.0.37",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
+    "jest": "^27.4.3",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.0",
     "prettier-plugin-organize-imports": "^2.3.4",
