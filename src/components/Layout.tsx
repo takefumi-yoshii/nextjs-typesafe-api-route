@@ -10,7 +10,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <Link
               path="/"
-              apiPrefetch={{
+              swrPrefetch={{
                 path: "/api/greet",
                 query: { name: "user" },
                 ignoreRoute: "/",
@@ -22,7 +22,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <Link
               path="/users"
-              apiPrefetch={{
+              swrPrefetch={{
                 path: "/api/users",
                 ignoreRoute: "/users",
               }}
@@ -33,7 +33,7 @@ const Layout: React.FC = ({ children }) => {
           <li>
             <Link
               path="/articles"
-              apiPrefetch={{
+              swrPrefetch={{
                 path: "/api/articles",
                 ignoreRoute: "/articles",
               }}

@@ -63,7 +63,7 @@ export const Articles = () => {
             <Link
               path="/articles/[id]"
               query={{ id: article.id }}
-              apiPrefetch={{
+              swrPrefetch={{
                 path: "/api/articles/[id]",
                 query: { id: article.id },
               }}

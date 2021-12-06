@@ -48,7 +48,7 @@ export const Users = () => {
             <Link
               path="/users/[id]"
               query={{ id: user.id }}
-              apiPrefetch={{
+              swrPrefetch={{
                 path: "/api/users/[id]",
                 query: { id: user.id },
               }}

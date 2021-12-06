@@ -45,16 +45,16 @@ export function Link<
 >({
   path,
   query,
-  apiPrefetch,
+  swrPrefetch,
   children,
   ...props
 }: LinkBase & {
   path: PagePath;
   query?: PageQuery;
-  apiPrefetch?: Prefetch<ApiPath, ReqQuery, ReqBody, PagePath>;
+  swrPrefetch?: Prefetch<ApiPath, ReqQuery, ReqBody, PagePath>;
 }) {
   const href = mapPathParamFromQuery(path, query);
-  if (!apiPrefetch) {
+  if (!swrPrefetch) {
     return (
       <NextLink {...props} href={href}>
         <a>{children}</a>
@@ -64,7 +64,7 @@ export function Link<
   return (
     <NextLink {...props} href={href}>
       <a>
-        <Prefetch {...apiPrefetch}>{children}</Prefetch>
+        <Prefetch {...swrPrefetch}>{children}</Prefetch>
       </a>
     </NextLink>
   );
