@@ -5,7 +5,7 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 // _____________________________________________________________________________
 //
-export type Query = PageQuery<"id">;
+export type Query = PageQuery<"from">;
 // _____________________________________________________________________________
 //
 const DeleteUser = ({ id }: { id: string }) => {
