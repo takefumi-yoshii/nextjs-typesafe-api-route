@@ -1,7 +1,6 @@
 import ts from "typescript";
 import type { Config } from "../types";
 import { emitModulesShim } from "./emitModulesShim";
-import { emitRootShim } from "./emitRootShim";
 import { pagesFileInfo } from "./pagesFileInfo";
 // ______________________________________________________
 //
@@ -31,6 +30,5 @@ export function createPagesTypes({
         ].includes(fileName)
     )
     .map(pagesFileInfo(pagesDir, distDir, program));
-  emitRootShim(distDir, moduleNameSpaece);
   emitModulesShim(pagesFileInfos, moduleNameSpaece);
 }
